@@ -33,7 +33,7 @@
 							UsuarioDTO usudto = usudao.selectUsuario(usuario);
 							
 							if(usuario.isEmpty() || clave.isEmpty()) {
-								out.println("Debes ingresar todos los campos <a href='../../index.html'> Intenta otra vez </a>");
+								out.println("Debes ingresar todos los campos <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 							} else {
 								if(usudto.getNickUsuario() != null) {
 									if(usudto.getClaveUsuario().toString().equals(clave)) {
@@ -43,10 +43,10 @@
 										
 										response.sendRedirect("../Visibles/MenuUsuario.jsp");
 									} else {
-										out.println("Contraseña inválida <a href='../../index.html'> Intenta otra vez </a>");
+										out.println("Contraseña inválida <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 									}
 								} else {
-									out.println("Usuario inválido <a href='../../index.html'> Intenta otra vez </a>");
+									out.println("Usuario inválido <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 								}
 							}														
 						%>

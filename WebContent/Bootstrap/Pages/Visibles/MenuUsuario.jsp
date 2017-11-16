@@ -63,7 +63,7 @@
     	</header>
 	    
 	    <section id="consultar" class="services bg-primary text-white">
-	    	<form name="datosConsulta" id="sesionForm" action="Pages/No visibles/Conexion.jsp" method="post">
+	    	<form name="datosConsulta" id="sesionForm" action="ListaConsulta.jsp" method="post">
 		    	<div class="row">
 	            	<div class="col-lg-12 text-center">
 	             		<h4> CONSULTA UNA PROPIEDAD	</h4>

@@ -3,6 +3,7 @@ package dao;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -60,5 +61,28 @@ public class ReservaDAO {
 		}
 		
 		return resdto;
+	}
+	
+	public ArrayList<Integer> selectReservaConsultar(String fechaInicio, String fechaFin) {
+		conn = conexion.ObjectPool.getConnection();
+		
+		ArrayList<Integer> listaProp = new ArrayList<Integer>();
+		
+		try {
+			String sql = "SELECT id_propiedad FROM reserva WHERE fechainicio_reserva between '" + fechaInicio + "' and '" 
+					+ fechaFin + "' or fechafin_reserva between '" + fechaInicio + "' and '" + fechaFin + "' group by id_propiedad";
+			PreparedStatement stmt = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = (ResultSet) stmt.executeQuery();
+			
+			while(rs.next()) {			
+				listaProp.add(Integer.parseInt(rs.getString("id_propiedad")));
+			}
+			
+			conexion.ObjectPool.releaseConnection(conn);
+		} catch (Exception e) {
+			System.out.println("Error select reserva consulta: " + e.getMessage());
+		}
+		
+		return listaProp;
 	}
 }

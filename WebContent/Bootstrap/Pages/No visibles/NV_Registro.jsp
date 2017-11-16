@@ -32,7 +32,7 @@
 				     		String confirmacion = request.getParameter("Confirmacion_clave_usuarioReg");
 							
 							if(usuario.isEmpty() || clave.isEmpty() || confirmacion.isEmpty()) {
-								out.println("Debes ingresar todos los campos <a href='../../index.html'> Intenta otra vez </a>");
+								out.println("Debes ingresar todos los campos <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 							} else {
 								UsuarioDAO usudao = new UsuarioDAO();
 								UsuarioDTO usudto = usudao.selectUsuario(usuario);
@@ -49,10 +49,10 @@
 										
 										response.sendRedirect("../Visibles/MenuUsuario.jsp");
 									} else {
-										out.println("Las contraseñas no coinciden <a href='../../index.html'> Intenta otra vez </a>");
+										out.println("Las contraseñas no coinciden <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 									}
 								} else {
-									out.println("El usuario ya está registrado <a href='../../index.html'> Intenta otra vez </a>");
+									out.println("El usuario ya está registrado <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 								}
 							}														
 						%>

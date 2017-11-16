@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 
 import com.mysql.jdbc.PreparedStatement;
 
@@ -119,5 +120,60 @@ public class PropiedadDAO {
 		}
 		
 		return propdto;
+	}
+	
+	public ArrayList<PropiedadDTO> selectPropiedadConsulta(ArrayList<Integer> listaId, String numPer) {
+		conn = conexion.ObjectPool.getConnection();
+		
+		ArrayList<PropiedadDTO> listaPropiedades = new ArrayList<PropiedadDTO>();
+		
+		try {
+			String sql = "";
+			
+			if(listaId.size() == 0) {
+				sql = "SELECT * FROM propiedad WHERE numeromaximopersonas_propiedad >= '" + numPer + "'";
+			} else {
+				sql = "SELECT * FROM propiedad ";
+				for(int i = 0; i < listaId.size(); i++) {
+					if(i == 0) {
+						sql += "WHERE id_propiedad != '" + listaId.get(i) + "' ";
+					} else {
+						sql += "and id_propiedad != '" + listaId.get(i) + "' ";
+					}				
+				}
+				
+				sql += "and numeromaximopersonas_propiedad >= '" + numPer + "'";
+			}			
+			
+			PreparedStatement stmt = (PreparedStatement) conn.prepareStatement(sql);
+			ResultSet rs = (ResultSet) stmt.executeQuery();
+			
+			while(rs.next()) {
+				PropiedadDTO propdto = new PropiedadDTO();
+				propdto.setIdPropiedad(Integer.parseInt(rs.getString("id_propiedad")));
+				propdto.setRegionPropiedad(rs.getString("region_propiedad"));
+				propdto.setCiudadPropiedad(rs.getString("ciudad_propiedad"));
+				propdto.setBarrioPropiedad(rs.getString("barrio_propiedad"));
+				propdto.setDireccionPropiedad(rs.getString("direccion_propiedad"));
+				propdto.setDescripcionPropiedad(rs.getString("descripcion_propiedad"));
+				propdto.setNumeroMaximoPersonasPropiedad(Integer.parseInt(rs.getString("numeromaximopersonas_propiedad")));
+				propdto.setNumeroHabitacionesPropiedad(Integer.parseInt(rs.getString("numerohabitaciones_propiedad")));
+				propdto.setNumeroBañosPropiedad(Integer.parseInt(rs.getString("numerobaños_propiedad")));
+				propdto.setCalefaccionPropiedad(Integer.parseInt(rs.getString("calefaccion_propiedad")));
+				propdto.setAireAcondicionadoPropiedad(Integer.parseInt(rs.getString("aireacondicionado_propiedad")));
+				propdto.setMascotasPropiedad(Integer.parseInt(rs.getString("mascotas_propiedad")));
+				propdto.setPrecioBasePropiedad(Integer.parseInt(rs.getString("preciobase_propiedad")));
+				propdto.setIdUsuario(Integer.parseInt(rs.getString("id_usuario")));
+				propdto.setIdTipoCasa(Integer.parseInt(rs.getString("id_tipocasa")));
+				
+				listaPropiedades.add(propdto);
+			}
+			
+			conexion.ObjectPool.releaseConnection(conn);
+		} catch (Exception e) {
+			System.out.println("Error select propiedad consulta: " + e.getMessage());
+		}
+		
+		return listaPropiedades;
 	}
 }

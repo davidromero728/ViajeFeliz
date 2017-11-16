@@ -46,7 +46,7 @@
 				     		if(region.isEmpty() || ciudad.isEmpty() || barrio.isEmpty() || descripcion.isEmpty() || 
 				     				numMaxPersonas.isEmpty() || numHabitaciones.isEmpty() || numBaños.isEmpty() || 
 				     				precioBase.isEmpty()) {
-				     			out.println("Debes ingresar todos los campos <a href='../../index.html'> Intenta otra vez </a>");
+				     			out.println("Debes ingresar todos los campos <a href='../../index.html' style='color:#CCCCCC'> Intenta otra vez </a>");
 				     		} else {
 				     			PropiedadDAO prodao = new PropiedadDAO();
 				     			PropiedadDTO prodto = prodao.selectPropiedad(region, ciudad, barrio, direccion);
@@ -76,9 +76,9 @@
 				     				PropiedadUsuarioDAO pudao = new PropiedadUsuarioDAO();
 				     				pudao.insertPropiedadUsuario(pudto);
 				     				
-				     				out.println("Registro de la propiedad exitoso <a href='../Visibles/PropiedadesUsuario.jsp'> Regresar </a>");
+				     				out.println("Registro de la propiedad exitoso <a href='../Visibles/PropiedadesUsuario.jsp' style='color:#CCCCCC'> Regresar </a>");
 				     			} else {
-				     				out.println("La propiedad ya está registrada <a href='../Visibles/PropiedadesUsuario.jsp'> Intentar otra vez </a>");
+				     				out.println("La propiedad ya está registrada <a href='../Visibles/PropiedadesUsuario.jsp' style='color:#CCCCCC'> Intentar otra vez </a>");
 				     			}
 				     		}
 						%>

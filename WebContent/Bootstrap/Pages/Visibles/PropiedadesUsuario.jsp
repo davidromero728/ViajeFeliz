@@ -53,9 +53,13 @@
     	</header>
 	    
 	    <section id="listaPropiedades" class="services bg-primary text-white">
+	    	<div class="row">
+	           	<div class="col-lg-12 text-center">
+	           		<h1>MIS PROPIEDADES</h1>
+	           	</div>
+			</div>	           	
 			<div class="col-lg-12 text-center">
-				<ul class="list-inline">
-					<h1>MIS PROPIEDADES</h1>
+				<ul class="list-inline">					
 					<li>
 						<%
 							String id = session.getAttribute("id").toString();
@@ -174,7 +178,7 @@
 	            <div id="success">
             		<div class="row">
                			<div class="col-lg-12 text-center">
-                   			<button  type="submit" class="btn btn-dark btn-lg js-scroll-trigger">Agregar propiedad</button>
+                   			<button  type="submit" class="btn btn-dark btn-lg js-scroll-trigger">Continuar</button>
           				</div>
           			</div>
           			<ul>

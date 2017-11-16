@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ page import= "java.text.*, java.util.*, java.sql.*, dto.*, dao.*, conexion.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -42,12 +43,7 @@
 	    <!-- Header -->
     	<header class="header" id="top">
      		<div class="text-vertical-center">
-        		<h1> BIENVENIDO </h1>
-        		<h2>
-        			<%
-        				out.println(session.getAttribute("nick"));
-        			%>
-        		</h2>        		
+        		<h1> RESULTADOS </h1>       		
      		</div>
     	</header>
     	
@@ -56,7 +52,56 @@
     			<ul class="list-inline">
     				<li>
     					<%
+    						String fechaInicio = request.getParameter("FechaInicio_consulta");
+    						String fechaFin = request.getParameter("FechaFin_consulta");
+    						String numeroPersonas = request.getParameter("NumPersonas_consulta");    						
     						
+    						if(fechaInicio.toString().isEmpty() || fechaFin.toString().isEmpty() || numeroPersonas.isEmpty()) {
+    							out.println("Se deben ingresar todos los campos <a href='MenuUsuario.jsp' style='color:#CCCCCC'> Intenta otra vez </a>");
+    						} else {
+    							SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    							Calendar cal = Calendar.getInstance();
+        						cal.add(Calendar.DATE, 1);
+        						String fechaActual = sdf.format(cal.getTime());
+        						
+        						java.util.Date dateInicio = sdf.parse(fechaInicio);
+        						java.util.Date dateFin = sdf.parse(fechaFin);
+        						java.util.Date dateActual = sdf.parse(fechaActual);
+    							
+    							if(dateInicio.before(dateFin)) {
+        							if(dateInicio.after(dateActual)) {
+        								
+        							ReservaDAO resdao = new ReservaDAO();
+        							ArrayList<Integer> lisPropRes = resdao.selectReservaConsultar(fechaInicio, fechaFin);
+        						
+        							PropiedadDAO prodao = new PropiedadDAO();
+        							ArrayList<PropiedadDTO> listaProp = prodao.selectPropiedadConsulta(lisPropRes, numeroPersonas);
+        						
+        							if(listaProp.size() == 0) {   						
+    					%>
+    					<p> NO HAY LUGARES DISPONIBLES </p>    					
+    					<%
+    							} else {
+    								for(int i = 0; i < listaProp.size(); i++) {    							
+    					%>
+    					<p>
+    						<a href="DetallesPropiedad.jsp?idPropiedad=<%=listaProp.get(i).getIdPropiedad()%>" style="color:#FFFFFF">
+    							<%=listaProp.get(i).getCiudadPropiedad() %>
+    							<%
+    								session.setAttribute("idPropiedad", listaProp.get(i).getIdPropiedad()); 
+    							%>
+    						</a>
+    					</p>
+    					<%	
+	    									}
+	    								}     						
+	    							} else {
+										out.println("La fecha inicial debe ser posterior a la fecha actual <a href='MenuUsuario.jsp' style='color:#CCCCCC'> Intenta otra vez </a>");
+									}
+								} else {
+									out.println("La fecha final debe ser posterior a la fecha inicial <a href='MenuUsuario.jsp' style='color:#CCCCCC'> Intenta otra vez </a>");
+								}	
+    						}    					
     					%>
     				</li>
     			</ul>
