@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 
 import com.mysql.jdbc.PreparedStatement;
@@ -16,7 +15,7 @@ public class TemporadaDAO {
 		
 		try {
 			String sql = "INSERT INTO temporada (nombre_temporada, fechainicio_temporada, fechafin_temporada) VALUES ('" 
-					+ temp.getNombreTemporada() + "', '" + temp.getFechaInicioTemporada() + "', '" + temp.getFechaFinTemporada() + "')";
+					+ temp.getNombreTemporada() + "')";
 			PreparedStatement stmt;
 			stmt = (PreparedStatement) conn.prepareStatement(sql);
 			stmt.executeUpdate();
@@ -39,8 +38,6 @@ public class TemporadaDAO {
 			while(rs.next()) {
 				tempdto.setIdTemporada(Integer.parseInt(rs.getString("id_temporada")));
 				tempdto.setNombreTemporada(rs.getString("nombre_temporada"));
-				tempdto.setFechaInicioTemporada(Date.valueOf(rs.getString("fechainicio_temporada")));
-				tempdto.setFechaFinTemporada(Date.valueOf(rs.getString("fechafin_temporada")));
 			}
 			
 			conexion.ObjectPool.releaseConnection(conn);
